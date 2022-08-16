@@ -1,0 +1,75 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+name: Java
+
+on:
+  push:
+    paths:
+      - '.github/workflows/java.yml'
+      - 'ci/docker/*java*'
+      - 'ci/scripts/java*.sh'
+      - 'ci/scripts/util_*.sh'
+      - 'format/Flight.proto'
+      - 'java/**'
+  pull_request:
+    paths:
+      - '.github/workflows/java.yml'
+      - 'ci/docker/*java*'
+      - 'ci/scripts/java*.sh'
+      - 'ci/scripts/util_*.sh'
+      - 'format/Flight.proto'
+      - 'java/**'
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+env:
+  DOCKER_VOLUME_PREFIX: ".docker/"
+  ARCHERY_DOCKER_USER: ${{ secrets.DOCKERHUB_USER }}
+  ARCHERY_DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+
+jobs:
+
+  windows:
+    name: Windows Server 2022 10.0 Java JDK ${{ matrix.jdk }}
+    runs-on: windows-latest
+    if: github.event_name == 'push'
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        jdk: [11]
+    steps:
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.jdk }}
+      - name: Build project
+        run: mvn compile exec:java -Dexec.mainClass="PoCArrowWindows"
+#      - name: Checkout Arrow
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#          submodules: recursive
+#      - name: Build
+#        shell: bash
+#        run: ci/scripts/java_build.sh $(pwd) $(pwd)/build
+#      - name: Test
+#        shell: bash
+#        run: ci/scripts/java_test.sh $(pwd) $(pwd)/build

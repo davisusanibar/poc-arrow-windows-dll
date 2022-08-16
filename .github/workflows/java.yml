@@ -62,8 +62,8 @@ jobs:
           java-version: ${{ matrix.jdk }}
       - name: Path pwd
         run: pwd
-      - name: Path ll -latr
-        run: ls -latr
+      - name: Path dir
+        run: dir
       - name: Build project
         run: mvn compile exec:java -Dexec.mainClass="PoCArrowWindows"
 #      - name: Checkout Arrow

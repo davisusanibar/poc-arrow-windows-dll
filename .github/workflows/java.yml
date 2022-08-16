@@ -60,6 +60,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.jdk }}
+      - name: Path pwd
+        run: pwd
+      - name: Path ll -latr
+        run: ls -latr
       - name: Build project
         run: mvn compile exec:java -Dexec.mainClass="PoCArrowWindows"
 #      - name: Checkout Arrow

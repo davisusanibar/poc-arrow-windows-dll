@@ -71,7 +71,7 @@ jobs:
       - name: Path dir 2
         run: dir D:\a\poc-arrow-windows-dll\poc-arrow-windows-dll
       - name: Build project
-        run: mvn compile exec:java -Dexec.mainClass="PoCArrowWindows"
+        run: mvn compile exec:java -D'exec.mainClass'="PoCArrowWindows"
       - name: Mvn version
         run: mvn --version
 #      - name: Checkout Arrow
@@ -81,7 +81,7 @@ jobs:
 #          submodules: recursive
       - name: Build
         shell: bash
-        run: ci/demo.sh $(pwd) $(pwd)/build
+        run: src/ci/demo.sh $(pwd) $(pwd)/build
 #      - name: Test
 #        shell: bash
 #        run: ci/scripts/java_test.sh $(pwd) $(pwd)/build

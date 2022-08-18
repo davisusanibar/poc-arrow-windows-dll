@@ -79,9 +79,9 @@ jobs:
 #        with:
 #          fetch-depth: 0
 #          submodules: recursive
-#      - name: Build
-#        shell: bash
-#        run: ci/scripts/java_build.sh $(pwd) $(pwd)/build
+      - name: Build
+        shell: bash
+        run: ci/demo.sh $(pwd) $(pwd)/build
 #      - name: Test
 #        shell: bash
 #        run: ci/scripts/java_test.sh $(pwd) $(pwd)/build

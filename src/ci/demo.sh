@@ -2,6 +2,8 @@
 
 set -ex
 echo "inicio"
+echo "$(uname -s)"
+echo "$(uname -m)"
 if [[ "$(uname -s)" == "Linux" ]] && [[ "$(uname -m)" == "s390x" ]]; then
   # Since some files for s390_64 are not available at maven central,
   # download pre-build files from Artifactory and install them explicitly

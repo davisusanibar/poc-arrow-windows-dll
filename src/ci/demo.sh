@@ -2,6 +2,7 @@
 
 set -ex
 echo "inicio"
+echo "v2"
 echo "$(uname -s)"
 echo "$(uname -m)"
 if [[ "$(uname -s)" == "Linux" ]] && [[ "$(uname -m)" == "s390x" ]]; then

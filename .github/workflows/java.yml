@@ -34,6 +34,7 @@ on:
       - 'ci/scripts/util_*.sh'
       - 'format/Flight.proto'
       - 'java/**'
+      - 'ci/**'
 
 concurrency:
   group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}

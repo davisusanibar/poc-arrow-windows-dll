@@ -14,29 +14,30 @@ on:
     - cron: '0 14 * * *'
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - shell: bash
-      name: create dir
-      run: mkdir /tmp/testcommands \
-        echo "uno" > /tmp/testcommands/uno.txt \
-        echo "dos" > /tmp/testcommands/dos.txt \
-    - shell: bash
-      name: Show local repo sync from remote
-      run: |
-        for i in `ls -t /tmp/testcommands`; do
-          echo "- $i: $(find /tmp/$i -mindepth 1 -maxdepth 1 -type d \
-          | wc -l \
-          | xargs) versions available"
-        done
-    - name: Prune Repository
-      shell: bash
-      env:
-        KEEP: ${{ github.event.inputs.keep || 14 }}
-      run: |
-        for i in `ls -t /tmp`; do
-          find /tmp/testcommands/$i -mindepth 1 -maxdepth 1 -type d -print0 \
-          | xargs -0 ls -t -d \
-          | tail -n +$((KEEP + 1))
-        done
+  testcommands:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        name: create dir
+        run: mkdir /tmp/testcommands \
+          echo "uno" > /tmp/testcommands/uno.txt \
+          echo "dos" > /tmp/testcommands/dos.txt \
+      - shell: bash
+        name: Show local repo sync from remote
+        run: |
+          for i in `ls -t /tmp/testcommands`; do
+            echo "- $i: $(find /tmp/$i -mindepth 1 -maxdepth 1 -type d \
+            | wc -l \
+            | xargs) versions available"
+          done
+      - name: Prune Repository
+        shell: bash
+        env:
+          KEEP: ${{ github.event.inputs.keep || 14 }}
+        run: |
+          for i in `ls -t /tmp`; do
+            find /tmp/testcommands/$i -mindepth 1 -maxdepth 1 -type d -print0 \
+            | xargs -0 ls -t -d \
+            | tail -n +$((KEEP + 1))
+          done
 

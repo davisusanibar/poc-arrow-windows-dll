@@ -27,8 +27,8 @@ jobs:
         name: Show local repo sync from remote
         run: |
           for i in `ls -t /tmp/testcommands`; do
-            echo "- $i: $(find /tmp/$i -mindepth 1 -maxdepth 1 -type d
-            | wc -l
+            echo "- $i: $(find /tmp/$i -mindepth 1 -maxdepth 1 -type d \
+            | wc -l \
             | xargs) versions available"
           done
       - name: Prune Repository

@@ -19,7 +19,7 @@ jobs:
     steps:
       - shell: bash
         name: create dir
-        run: mkdir /tmp/testcommands \
+        run: mkdir -p /tmp/testcommands \
           echo "uno" > /tmp/testcommands/uno.txt \
           echo "dos" > /tmp/testcommands/dos.txt \
       - shell: bash

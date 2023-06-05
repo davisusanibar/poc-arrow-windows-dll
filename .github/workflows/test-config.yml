@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java Test JAVA_HOME MVN_HOME
 
 on:
   workflow_dispatch:
@@ -40,4 +40,5 @@ jobs:
           echo $JDK
           echo $MAVEN
           echo $JAVA_HOME
+          echo $MVN_HOME
     

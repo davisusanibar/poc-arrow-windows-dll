@@ -1,0 +1,41 @@
+name: Java CI with Maven
+on:
+  workflow_dispatch:
+jobs:
+  debian:
+    name: ${{ matrix.title }}
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.pull_request.title, 'WIP') }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        jdk: [8, 11, 17, 18]
+        include:
+        - jdk: 8
+          title: AMD64 Debian 9 Java JDK 8 Maven 3.5.4
+          maven: 3.5.4
+          image: debian-java
+        - jdk: 11
+          title: AMD64 Debian 9 Java JDK 11 Maven 3.6.2
+          maven: 3.6.2
+          image: debian-java
+        - jdk: 17
+          title: AMD64 Oracle Linux Server 8.5 Java JDK 17 Maven 3.8.5
+          maven: 3.8.5
+          image: oracle-java
+        - jdk: 18
+          title: AMD64 Oracle Linux Server 8.6 Java JDK 18 Maven 3.8.5
+          maven: 3.8.5
+          image: oracle-java
+    env:
+      JDK: ${{ matrix.jdk }}
+      MAVEN: ${{ matrix.maven }}
+    steps:
+      - name: Print values
+        with:
+          run:
+            - echo $JDK
+            - echo $MAVEN
+            - echo $JAVA_HOME
+    

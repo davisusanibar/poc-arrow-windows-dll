@@ -1,7 +1,10 @@
 name: Java CI with Maven
+
 on:
   workflow_dispatch:
+
 jobs:
+
   debian:
     name: ${{ matrix.title }}
     runs-on: ubuntu-latest
@@ -33,9 +36,8 @@ jobs:
       MAVEN: ${{ matrix.maven }}
     steps:
       - name: Print values
-        with:
-          run:
-            - echo $JDK
-            - echo $MAVEN
-            - echo $JAVA_HOME
+        run: |
+          echo $JDK
+          echo $MAVEN
+          echo $JAVA_HOME
     

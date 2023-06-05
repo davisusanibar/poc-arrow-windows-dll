@@ -40,5 +40,6 @@ jobs:
           echo $JDK
           echo $MAVEN
           echo $JAVA_HOME
-          echo $MVN_HOME
+          java -version
+          mvn -version
     

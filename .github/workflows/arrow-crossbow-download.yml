@@ -70,3 +70,33 @@ jobs:
           fi
           echo $PREFIX
           archery crossbow download-artifacts -f java-jars -t binaries  $PREFIX
+      - name: Download files
+        shell: bash
+        run: ls -latr binaries/
+      - shell: bash
+        name: Build Repository
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          if [ -z $PREFIX ]; then
+            PREFIX=nightly-packaging-${DATE}-0
+          fi
+          PATTERN_TO_GET_LIB_AND_VERSION='([a-z].+)-([0-9]+.[0-9]+.[0-9]+-SNAPSHOT)'
+          mkdir -p repo/org/apache/arrow/
+          for LIBRARY in $(ls binaries/$PREFIX/java-jars | grep -E '.jar|.json|.pom|.xml' | grep SNAPSHOT); do
+            echo "$LIBRARY"
+            echo $LIBRARY
+            [[ $LIBRARY =~ $PATTERN_TO_GET_LIB_AND_VERSION ]]
+            mkdir -p repo/org/apache/arrow/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}
+            mkdir -p repo/org/apache/arrow/${BASH_REMATCH[1]}/${DATE}
+            echo "1"
+            echo ${BASH_REMATCH[1]}
+            echo "2"
+            echo ${BASH_REMATCH[2]}
+            echo "3"
+            echo ${BASH_REMATCH[3]}
+            # Copy twice to maintain a latest snapshot and some earlier versions
+            cp binaries/$PREFIX/java-jars/$LIBRARY repo/org/apache/arrow/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}
+            touch repo/org/apache/arrow/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}
+            cp binaries/$PREFIX/java-jars/$LIBRARY repo/org/apache/arrow/${BASH_REMATCH[1]}/${DATE}
+            echo "Artifacts $LIBRARY configured"
+          done

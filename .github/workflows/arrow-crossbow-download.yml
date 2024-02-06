@@ -71,7 +71,6 @@ jobs:
           echo $PREFIX
           archery crossbow download-artifacts -f java-jars -t binaries  $PREFIX
           tree binaries
-          tree binaries/nightly-packaging-2024-02-06-0
       - name: Download files
         shell: bash
         run: tree binaries/

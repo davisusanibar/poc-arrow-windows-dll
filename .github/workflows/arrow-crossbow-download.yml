@@ -72,7 +72,7 @@ jobs:
           archery crossbow download-artifacts -f java-jars -t binaries  $PREFIX
       - name: Download files
         shell: bash
-        run: ls -latr binaries/
+        run: tree binaries/
       - shell: bash
         name: Build Repository
         run: |
@@ -82,6 +82,7 @@ jobs:
           fi
           PATTERN_TO_GET_LIB_AND_VERSION='([a-z].+)-([0-9]+.[0-9]+.[0-9]+-SNAPSHOT)'
           mkdir -p repo/org/apache/arrow/
+          ls -latr $(ls binaries/$PREFIX/java-jars
           for LIBRARY in $(ls binaries/$PREFIX/java-jars | grep -E '.jar|.json|.pom|.xml' | grep SNAPSHOT); do
             echo "$LIBRARY"
             echo $LIBRARY

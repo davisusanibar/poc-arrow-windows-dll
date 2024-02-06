@@ -70,6 +70,8 @@ jobs:
           fi
           echo $PREFIX
           archery crossbow download-artifacts -f java-jars -t binaries  $PREFIX
+          tree binaries
+          tree binaries/nightly-packaging-2024-02-06-0
       - name: Download files
         shell: bash
         run: tree binaries/
@@ -82,7 +84,7 @@ jobs:
           fi
           PATTERN_TO_GET_LIB_AND_VERSION='([a-z].+)-([0-9]+.[0-9]+.[0-9]+-SNAPSHOT)'
           mkdir -p repo/org/apache/arrow/
-          ls -latr $(ls binaries/$PREFIX/java-jars
+          ls -latr binaries/$PREFIX/java-jars
           for LIBRARY in $(ls binaries/$PREFIX/java-jars | grep -E '.jar|.json|.pom|.xml' | grep SNAPSHOT); do
             echo "$LIBRARY"
             echo $LIBRARY
